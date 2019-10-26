@@ -14,21 +14,26 @@
     integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
     crossorigin=""></script>
     
-    <title>ISS Tracker</title>
+    <title>ISS Location Map</title>
 </head>
 <body>
-    <h1>Where is the Int'l Space Station?</h1>
+    <div id="title-section">
 
-    <p>
-        latitude: <span id="lat"></span>°<br />
-        longitude: <span id="lon"></span>°
-    </p>
+        <h1 class="flow-text">ISS Location Map</h1>
+        <p class="flow-text">Real-Time Position of the International Space Station</p>
+        <p class="flow-text">Updated: 1 Second Intervals</p>
+        <p class="flow-text">
+            Latitude: <span id="lat"></span>°<br />
+            Longitude: <span id="lon"></span>°
+        </p>
+
+    </div>
 
     <div id="issMap"></div>
 
     <script>
         // Creating map and tiles
-        const mymap = L.map('issMap').setView([0, 0], 2);
+        const mymap = L.map('issMap').setView([0, 0], 5);
         const attribution = 
             '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreeMap</a> contributors';
         
@@ -54,11 +59,10 @@
             const data = await response.json();
             const { latitude, longitude } = data;
 
+            // Always set the view to current lat lon and zoom
+            mymap.setView([latitude, longitude], mymap.getZoom());
             marker.setLatLng([latitude, longitude]);
-            if (firstTime) {
-                mymap.setView([latitude, longitude], 5);
-                firstTime = false;
-            }
+            
             document.getElementById('lat').textContent = latitude.toFixed(2);
             document.getElementById('lon').textContent = longitude.toFixed(2);  
         }

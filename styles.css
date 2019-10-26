@@ -1,3 +1,16 @@
 #issMap {
     height: 500px;
 }
+#title-section {
+    text-align: center;
+}
+#h1 {
+    display: inline-block;
+    font-family: sans-serif;
+}
+#p {
+    display: inline-block;
+}
+body {
+    background-color: whitesmoke;
+}
