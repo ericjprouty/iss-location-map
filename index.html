@@ -18,66 +18,87 @@
     <title>Welcome to The ISS Channel</title>
 </head>
 <body>
-    
-    <div class="container" cid="map-key">
-        <div id="title-section" class="flow-text">
+      <!-- This content will be:
+      3-columns-wide on large screens,
+      4-columns-wide on medium screens,
+      12-columns-wide on small screens -->
 
-            <p class="flow-text" id="title"><strong>The ISS Channel Presents:</strong></p>
-            <p class="flow-text" id="title-2">ISS Location Map</p>
-            <p class="flow-text" id="subtitle">Real-Time Global Position of the International Space Station</p>
-            <p class="flow-text" id="update-status">Updated: 1 Second Intervals</p>
-            <p class="flow-text">
-                Latitude: <span id="lat"></span>°<br />
-                Longitude: <span id="lon"></span>°
-            </p>
+    <div class="row" id="map-key">
+        <div class="col s12 m4 l3">
+            <div class="flow-text" id="title-section">
 
+                <p class="flow-text" id="title">ISS Channel Presents:</strong></p>
+                <p class="flow-text" id="title-2"><strong>ISS Location Map</strong></p>
+                <p class="flow-text" id="subtitle">Real-Time Global Position of the International Space Station</p>
+                <p class="flow-text" id="update-status">Updated: 1 Second Intervals</p>
+                <p class="flow-text">
+                    Latitude: <span id="lat"></span>°<br>
+                    Longitude: <span id="lon"></span>°<br>
+                    Altitude: <span id="altitude"></span> mi
+                </p>
+            </div>
         </div>
-
         <!-- <div id="issBadge">
             <img src="iss_logo.jpg"></img>
         </div> -->
     </div>
-    <div id="issMap"></div>
 
-        <script>
-            // Creating map and tiles
-            const mymap = L.map('issMap').setView([0, 0], 5 );
-            const attribution = 
-                '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreeMap</a> contributors';
-            
-            const tileUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-            const tiles = L.tileLayer(tileUrl, { attribution });
-            tiles.addTo(mymap);
+    <!-- <div id="video-player-1">
+        <video width="500" controls>
+            <source src="https://www.mapbox.com/bites/00188/patricia_nasa.webm" type="video/webm">
+            <source src="https://www.mapbox.com/bites/00188/patricia_nasa.mp4" type="video/mp4">
+        </video>
+    </div> -->
 
-            // Creating marker on map with ISS a custom icon
-            var issIcon = L.icon({
-                iconUrl: 'International_Space_Station.png',
-                iconSize: [85, 67],
-                iconAnchor: [25, 16],
-            });
+  
+            <!--  This content will be:
+        9-columns-wide on large screens,
+        8-columns-wide on medium screens,
+        12-columns-wide on small screens  -->
 
-            const marker = L.marker([0, 0], { icon: issIcon }).addTo(mymap);
-
-            const api_url = 'https://api.wheretheiss.at/v1/satellites/25544';
-            
-            let firstTime = true;
-
-            async function getISS() {
-                const response = await fetch(api_url); 
-                const data = await response.json();
-                const { latitude, longitude } = data;
-
-                // Always set the view to current lat lon and zoom
-                mymap.setView([latitude, longitude], mymap.getZoom());
-                marker.setLatLng([latitude, longitude]);
+    <div class="row" id="issMap"></div>
+        <div class="col s12 m8 l9">
+            <script>
+                // Creating map and tiles
+                const mymap = L.map('issMap').setView([0, 0], 5 );
+                const attribution = 
+                    '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreeMap</a> contributors';
                 
-                document.getElementById('lat').textContent = latitude.toFixed(4);
-                document.getElementById('lon').textContent = longitude.toFixed(4);  
-            }
-    
-            getISS();
+                const tileUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+                const tiles = L.tileLayer(tileUrl, { attribution });
+                tiles.addTo(mymap);
 
-            setInterval(getISS, 1000);
-        </script>
+                // Creating marker on map with ISS a custom icon
+                var issIcon = L.icon({
+                    iconUrl: 'International_Space_Station.png',
+                    iconSize: [85, 67],
+                    iconAnchor: [25, 16],
+                });
+
+                const marker = L.marker([0, 0], { icon: issIcon }).addTo(mymap);
+
+                const api_url = 'https://api.wheretheiss.at/v1/satellites/25544';
+                
+                let firstTime = true;
+
+                async function getISS() {
+                    const response = await fetch(api_url); 
+                    const data = await response.json();
+                    const { latitude, longitude, altitude } = data;
+
+                    // Always set the view to current lat lon and zoom
+                    mymap.setView([latitude, longitude], mymap.getZoom());
+                    marker.setLatLng([latitude, longitude]);
+                    
+                    document.getElementById('lat').textContent = latitude.toFixed(4);
+                    document.getElementById('lon').textContent = longitude.toFixed(4);
+                    document.getElementById('altitude').textContent = altitude.toFixed(2); 
+                }
+        
+                getISS();
+
+                setInterval(getISS, 1000);
+            </script>
+        </div>
 </body>
 </html> 
