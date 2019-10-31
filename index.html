@@ -30,12 +30,13 @@
                 <p class="flow-text" id="title">ISS Channel Presents:</strong></p>
                 <p class="flow-text" id="title-2"><strong>ISS Location Map</strong></p>
                 <p class="flow-text" id="subtitle">Real-Time Global Position of the International Space Station</p>
-                <p class="flow-text" id="update-status">Updated: 1 Second Intervals</p>
                 <p class="flow-text">
                     Latitude: <span id="lat"></span>°<br>
                     Longitude: <span id="lon"></span>°<br>
-                    Altitude: <span id="altitude"></span> mi
+                    Altitude: <span id="altitude"></span> km<br>
+                    Velocity: <span id="velocity"></span> kph
                 </p>
+                <p class="flow-text" id="update-status">Updated: 1 Second Intervals</p>
             </div>
         </div>
         <!-- <div id="issBadge">
@@ -84,15 +85,17 @@
                 async function getISS() {
                     const response = await fetch(api_url); 
                     const data = await response.json();
-                    const { latitude, longitude, altitude } = data;
+                    const { latitude, longitude, altitude, velocity } = data;
 
                     // Always set the view to current lat lon and zoom
                     mymap.setView([latitude, longitude], mymap.getZoom());
                     marker.setLatLng([latitude, longitude]);
                     
-                    document.getElementById('lat').textContent = latitude.toFixed(4);
-                    document.getElementById('lon').textContent = longitude.toFixed(4);
-                    document.getElementById('altitude').textContent = altitude.toFixed(2); 
+                    document.getElementById('lat').textContent = latitude.toFixed(2);
+                    document.getElementById('lon').textContent = longitude.toFixed(2);
+                    document.getElementById('altitude').textContent = altitude.toFixed(2);
+                    document.getElementById('velocity').textContent = velocity.toFixed(2); 
+                    // document.getElementById('units').textContent = units.toFixed(4); 
                 }
         
                 getISS();
