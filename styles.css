@@ -8,7 +8,6 @@ body {
     margin: 0;
     height: 100%;
     width: 100%;
-    background-color: whitesmoke;
     position: absolute;
     z-index: 0;
 }
@@ -21,15 +20,15 @@ body {
 #title-section {
     text-align: center;
     font-family: Arial, Helvetica, sans-serif;
-    position: fixed;
+    position: absolute;
     top: 0;
     right: 0;
-    width: 200px;
-    background-color: white;
-    padding: 1px;
-    margin: 8px;
+    padding: 6px 12px 6px 12px;
+    margin: 12px;
     z-index: 3;
-    opacity: 0.8;
+    background-color: whitesmoke;
+}
+#map-key {
 }
 /* .issBadge {
     position: fixed;
@@ -60,3 +59,12 @@ body {
 #update-status {
     font-size: 0.5em;
 }
+/* #ustream {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 20%;
+    margin: 0px;
+    z-index: 5;
+} */    
